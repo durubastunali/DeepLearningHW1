@@ -40,7 +40,6 @@ def gradient():
     grad = 0  # descent = 0, ascent = 1
     e = 0.01
 
-    # Path to store coordinates of the ascent path
     path = [(x_0, y_0)]
 
     while True:
@@ -49,10 +48,9 @@ def gradient():
 
         print("stop cond=", stop_condition)
 
-        # Store the new coordinates in the path
         path.append((x_new, y_new))
 
-        if stop_condition < 0.0001:
+        if stop_condition < e:
             print("x =", x_new, "y =", y_new)
             break
         else:
@@ -63,15 +61,15 @@ def gradient():
 
 
 def plot_isohypse():
-    x = np.linspace(-5, 5, 100)  # X range
-    y = np.linspace(-5, 5, 100)  # Y range
+    x = np.linspace(-5, 5, 100)
+    y = np.linspace(-5, 5, 100)
     X, Y = np.meshgrid(x, y)
 
     Z = np.exp(-1*(X**2 + Y**2)) + 3*np.exp(-2**((X-2)**2 + (Y-3)**2)) - 4*np.exp(-2*((X+4)**2 + (Y+3)**2))
 
     plt.figure(figsize=(8, 6))
     contours = plt.contour(X, Y, Z, levels=20, cmap="viridis")
-    plt.clabel(contours, inline=True, fontsize=8)  # Label the contours
+    plt.clabel(contours, inline=True, fontsize=8)
 
     plt.xlabel("X")
     plt.ylabel("Y")
@@ -79,9 +77,9 @@ def plot_isohypse():
 
 
 def plot_gradient_path(path):
-    x_path, y_path = zip(*path)  # Unzip the path into x and y coordinates
+    x_path, y_path = zip(*path)
 
-    plt.plot(x_path, y_path, marker='o', color='r', markersize=5, label="Gradient Ascent Path")
+    plt.plot(x_path, y_path, marker='o', color='r', markersize=2, label="Gradient Path")
     plt.legend()
 
 
