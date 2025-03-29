@@ -71,7 +71,7 @@ def calculate_parameters_tenth_order():
     j_0 = 0
     k_0 = 0
 
-    e = 0.001
+    e = 0.000000000000000000001
 
     while True:
         a_n = a_0 - e * partial_derivative_tenth(a_0, b_0, c_0, d_0, e_0, f_0, g_0, h_0, i_0, j_0, k_0, 10)
@@ -86,7 +86,9 @@ def calculate_parameters_tenth_order():
         j_n = j_0 - e * partial_derivative_tenth(a_0, b_0, c_0, d_0, e_0, f_0, g_0, h_0, i_0, j_0, k_0, 1)
         k_n = k_0 - e * partial_derivative_tenth(a_0, b_0, c_0, d_0, e_0, f_0, g_0, h_0, i_0, j_0, k_0, 0)
 
-        if ((a_n - a_0) ** 2 + (b_n - b_0) ** 2 + (c_n - c_0) ** 2 + (d_n - d_0) ** 2 + (e_n - e_0) ** 2 +
+        if a_n > 100 or a_n < -100:
+            break
+        elif ((a_n - a_0) ** 2 + (b_n - b_0) ** 2 + (c_n - c_0) ** 2 + (d_n - d_0) ** 2 + (e_n - e_0) ** 2 +
             (f_n - f_0) ** 2 + (g_n - g_0) ** 2 + (i_n - i_0) ** 2 + (j_n - j_0) ** 2) + (k_n - k_0) ** 2 < e:
             break
         else:
@@ -128,7 +130,7 @@ def calculate_parameters_linear():
 
 if __name__ == '__main__':
     a, b = calculate_parameters_linear()
-    plot_regression_linear(a, b)
+    #plot_regression_linear(a, b)
 
     a, b, c, d, e, f, g, h, i, j, k = calculate_parameters_tenth_order()
     plot_regression_tenth_order(a, b, c, d, e, f, g, h, i, j, k)
