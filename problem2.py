@@ -39,15 +39,15 @@ def plot_regression_linear(a, b):
 
 
 def tenth_order(a, b, c, d, e, f, g, h, i, j, k, x, y):
-    val = a*(x**10) + b*(x**9) + c*(x**8) + d*(x**7) + e*(x**6) + f*(x**5) + g*(x**4) + h*(x**3) + i*(x**2) + j*x + k - y
-    return val
+    return (a*(x**10) + b*(x**9) + c*(x**8) + d*(x**7) + e*(x**6) + f*(x**5) +
+            g*(x**4) + h*(x**3) + i*(x**2) + j*x + k - y)
 
 
 #a10 b9 c8 d7 e6 f5 g4 h3 i2 j1 k0
 def partial_derivative_tenth(a, b, c, d, e, f, g, h, i, j, k, power):
     grad_a_sum = 0
     for instance in dataset:
-        grad_a_sum += 2 * (instance[0] ** power) ** tenth_order(a, b, c, d, e, f, g, h, i, j, k, instance[0], instance[1])
+        grad_a_sum += 2 * (instance[0] ** power) * tenth_order(a, b, c, d, e, f, g, h, i, j, k, instance[0], instance[1])
     return grad_a_sum
 
 
@@ -59,17 +59,17 @@ def partial_derivative_linear(a, b, power):
 
 
 def calculate_parameters_tenth_order():
-    a_0 = round(np.random.uniform(-1, 1), 2)
-    b_0 = round(np.random.uniform(-1, 1), 2)
-    c_0 = round(np.random.uniform(-1, 1), 2)
-    d_0 = round(np.random.uniform(-1, 1), 2)
-    e_0 = round(np.random.uniform(-1, 1), 2)
-    f_0 = round(np.random.uniform(-1, 1), 2)
-    g_0 = round(np.random.uniform(-1, 1), 2)
-    h_0 = round(np.random.uniform(-1, 1), 2)
-    i_0 = round(np.random.uniform(-1, 1), 2)
-    j_0 = round(np.random.uniform(-1, 1), 2)
-    k_0 = round(np.random.uniform(-1, 1), 2)
+    a_0 = 0
+    b_0 = 0
+    c_0 = 0
+    d_0 = 0
+    e_0 = 0
+    f_0 = 0
+    g_0 = 0
+    h_0 = 0
+    i_0 = 0
+    j_0 = 0
+    k_0 = 0
 
     e = 0.001
 
@@ -85,7 +85,6 @@ def calculate_parameters_tenth_order():
         i_n = i_0 - e * partial_derivative_tenth(a_0, b_0, c_0, d_0, e_0, f_0, g_0, h_0, i_0, j_0, k_0, 2)
         j_n = j_0 - e * partial_derivative_tenth(a_0, b_0, c_0, d_0, e_0, f_0, g_0, h_0, i_0, j_0, k_0, 1)
         k_n = k_0 - e * partial_derivative_tenth(a_0, b_0, c_0, d_0, e_0, f_0, g_0, h_0, i_0, j_0, k_0, 0)
-
 
         if ((a_n - a_0) ** 2 + (b_n - b_0) ** 2 + (c_n - c_0) ** 2 + (d_n - d_0) ** 2 + (e_n - e_0) ** 2 +
             (f_n - f_0) ** 2 + (g_n - g_0) ** 2 + (i_n - i_0) ** 2 + (j_n - j_0) ** 2) + (k_n - k_0) ** 2 < e:
@@ -106,8 +105,8 @@ def calculate_parameters_tenth_order():
     return a_n, b_n, c_n, d_n, e_n, f_n, g_n, h_n, i_n, j_n, k_n
 
 def calculate_parameters_linear():
-    a_0 = round(np.random.uniform(-1, 1), 2)
-    b_0 = round(np.random.uniform(-1, 1), 2)
+    a_0 = 0
+    b_0 = 0
 
     print("Initial a =", a_0, "and b =", b_0)
 
@@ -129,7 +128,7 @@ def calculate_parameters_linear():
 
 if __name__ == '__main__':
     a, b = calculate_parameters_linear()
-    #plot_regression_linear(a, b)
+    plot_regression_linear(a, b)
 
     a, b, c, d, e, f, g, h, i, j, k = calculate_parameters_tenth_order()
     plot_regression_tenth_order(a, b, c, d, e, f, g, h, i, j, k)
