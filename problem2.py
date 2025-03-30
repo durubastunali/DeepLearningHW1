@@ -187,5 +187,8 @@ if __name__ == '__main__':
     a, b = calculate_parameters_linear()
     #plot_regression_linear(a, b)
 
+    a, b, c, d, e, f, g, h, i, j, k = calculate_parameters_tenth_order()
+    plot_regression_tenth_order(a, b, c, d, e, f, g, h, i, j, k)
+
     a, b, c, d, e, f, g, h, i, j, k = calculate_parameters_tenth_order_regularization()
     plot_regression_tenth_order(a, b, c, d, e, f, g, h, i, j, k)
