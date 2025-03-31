@@ -25,8 +25,8 @@ def gradient_q(p, q):
 
 
 def logistic_regression():
-    p = np.random.uniform(0, 1)
-    q = np.random.uniform(0, 1)
+    p = np.random.uniform(-5, 5)
+    q = np.random.uniform(-5, 5)
 
     e = 0.01
 
@@ -50,13 +50,13 @@ def plot_sigmoid(p, q):
 
     x_line = np.linspace(min(x_values), max(x_values), 100)
     y_line = 1 / (1 + np.exp(-(p*x_line + q)))
-    plt.plot(x_line, y_line, color='blue', label=f'Regression Line: y={p:.2f}x+{q:.2f}')
+    plt.plot(x_line, y_line, color='blue', label=f'Regression Line: p={p:.2f}, q={q:.2f}')
 
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.legend()
     plt.title('Logistic Regression - Sigmoid')
-    plt.savefig("sigmoid.png")
+    plt.savefig("logistic_regression.png")
 
 
 if __name__ == '__main__':
