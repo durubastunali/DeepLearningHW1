@@ -1,32 +1,34 @@
+# Duru Baştunalı 150120075 - CSE4079 HW1, Question 1
+
 import numpy as np
 import matplotlib.pyplot as plt
 
 
-def partial_derivative_x(x_n, y_n):
+def partial_derivative_x(x_n, y_n):  # Partial derivative of f(x,y) with respect to x
     term1 = -2 * x_n * np.exp(-x_n ** 2 - y_n ** 2)
     term2 = -12 * (x_n - 2) * np.exp(-2 * (x_n ** 2 - 4 * x_n + y_n ** 2 - 6 * y_n + 13))
     term3 = 16 * (x_n + 4) * np.exp(-2 * (x_n ** 2 + 8 * x_n + y_n ** 2 + 6 * y_n + 25))
     return term1 + term2 + term3
 
 
-def partial_derivative_y(x_n, y_n):
+def partial_derivative_y(x_n, y_n):  # Partial derivative of f(x,y) with respect to y
     term1 = -2 * y_n * np.exp(-x_n ** 2 - y_n ** 2)
     term2 = -12 * (y_n - 3) * np.exp(-2 * (x_n ** 2 - 4 * x_n + y_n ** 2 - 6 * y_n + 13))
     term3 = 16 * (y_n + 3) * np.exp(-2 * (x_n ** 2 + 8 * x_n + y_n ** 2 + 6 * y_n + 25))
     return term1 + term2 + term3
 
 
-def calculate_next_xy(x_n, y_n, e, grad):
-    if grad == 0:  # gradient descent
+def calculate_next_xy(x_n, y_n, e, grad):  # Calculate new x and y
+    if grad == 0:  # Gradient descent -> - in formula
         x_new = x_n - e * partial_derivative_x(x_n, y_n)
         y_new = y_n - e * partial_derivative_y(x_n, y_n)
-    elif grad == 1:  # gradient ascent
+    elif grad == 1:  # Gradient ascent -> + in formula
         x_new = x_n + e * partial_derivative_x(x_n, y_n)
         y_new = y_n + e * partial_derivative_y(x_n, y_n)
     return x_new, y_new
 
 
-def f(X, Y):
+def f(X, Y): # f(x,y) function
     return np.exp(-1 * (X ** 2 + Y ** 2)) + 3 * np.exp(-2 ** ((X - 2) ** 2 + (Y - 3) ** 2)) - 4 * np.exp(
         -2 * ((X + 4) ** 2 + (Y + 3) ** 2))
 
@@ -43,17 +45,17 @@ def gradient(x_0, y_0):
         x_new, y_new = calculate_next_xy(x_0, y_0, e, grad)
         stop_condition = (f(x_new, y_new) - f(x_0, y_0))**2
 
-        if stop_condition < 0.001:
+        if stop_condition < 0.001:  # Stop condition of updating x and y
             print(f"Final: X={x_new}, Y={y_new}")
             break
-        else:
+        else:  # Continue with new x and y values
             x_0, y_0 = x_new, y_new
             path.append((x_new, y_new))
 
     return path
 
 
-def plot_isohypse():
+def plot_isohypse():  # Draw the isohypse plot
     x = np.linspace(-5, 5, 100)
     y = np.linspace(-5, 5, 100)
     X, Y = np.meshgrid(x, y)
@@ -69,7 +71,7 @@ def plot_isohypse():
     plt.title("Gradient Ascent")
 
 
-def plot_gradient_path(path):
+def plot_gradient_path(path):  # Draw the path on isohypse plot
     x_path, y_path = zip(*path)
     plt.plot(x_path, y_path, linestyle="-", color="r", marker="o", markersize=3, label="Gradient Path")
 
@@ -85,7 +87,7 @@ def plot_gradient_path(path):
 
 if __name__ == '__main__':
     start_points = []
-    for i in range(5):
+    for i in range(5):  # 5 random start point
         start_points.append((np.random.uniform(-5, 5), np.random.uniform(-5)))
     plot_isohypse()
     for x_0, y_0 in start_points:

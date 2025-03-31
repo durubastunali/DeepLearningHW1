@@ -1,14 +1,16 @@
+# Duru Baştunalı 150120075 - CSE4079 HW1, Question 3
+
 import numpy as np
 from matplotlib import pyplot as plt
 
 dataset = [(10, 0), (20, 0), (15, 0), (40,0), (50, 1), (60, 0), (60, 1), (70,1), (80,0), (90, 1), (95, 1), (100,1), (100, 1)]
 
 
-def sigmoid(i, p, q):
+def sigmoid(i, p, q):  # Sigmoid function
     return 1 / (1 + np.exp(-(p*i + q)))
 
 
-def gradient_p(p, q):
+def gradient_p(p, q):  # Gradient of p
     sum = 0
     for instance in dataset:
         x, y = instance[0], instance[1]
@@ -16,7 +18,7 @@ def gradient_p(p, q):
     return sum
 
 
-def gradient_q(p, q):
+def gradient_q(p, q):  # Gradient of q
     sum = 0
     for instance in dataset:
         x, y = instance[0], instance[1]
@@ -24,7 +26,7 @@ def gradient_q(p, q):
     return sum
 
 
-def logistic_regression():
+def logistic_regression():  # Logistic regression with sigmoid function
     p = np.random.uniform(-5, 5)
     q = np.random.uniform(-5, 5)
 
@@ -43,7 +45,7 @@ def logistic_regression():
     return p, q
 
 
-def plot_sigmoid(p, q):
+def plot_sigmoid(p, q):  # Plotting the logistic regression model
     x_values = [point[0] for point in dataset]
     y_values = [point[1] for point in dataset]
     plt.scatter(x_values, y_values, color='red', label='Data Points')
