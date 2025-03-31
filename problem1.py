@@ -31,14 +31,11 @@ def f(X, Y):
         -2 * ((X + 4) ** 2 + (Y + 3) ** 2))
 
 
-def gradient():
-    x_0 = np.random.uniform(-5, 5)
-    y_0 = np.random.uniform(-5, 5)
+def gradient(x_0, y_0):
+    print(f"Initial: X={x_0}, Y={y_0}")
 
-    print("inital: X={}, Y={}".format(x_0, y_0))
-
-    grad = 0  # descent = 0, ascent = 1
-    e = 0.01
+    grad = 1  # Descent = 0, Ascent = 1
+    e = 0.1
 
     path = [(x_0, y_0)]
 
@@ -46,16 +43,12 @@ def gradient():
         x_new, y_new = calculate_next_xy(x_0, y_0, e, grad)
         stop_condition = (f(x_new, y_new) - f(x_0, y_0))**2
 
-        print("stop cond=", stop_condition)
-
-        path.append((x_new, y_new))
-
-        if stop_condition < e:
-            print("x =", x_new, "y =", y_new)
+        if stop_condition < 0.001:
+            print(f"Final: X={x_new}, Y={y_new}")
             break
         else:
-            x_0 = x_new
-            y_0 = y_new
+            x_0, y_0 = x_new, y_new
+            path.append((x_new, y_new))
 
     return path
 
@@ -73,18 +66,29 @@ def plot_isohypse():
 
     plt.xlabel("X")
     plt.ylabel("Y")
-    plt.title("Isohypse Plot")
+    plt.title("Gradient Ascent")
 
 
 def plot_gradient_path(path):
     x_path, y_path = zip(*path)
+    plt.plot(x_path, y_path, linestyle="-", color="r", marker="o", markersize=3, label="Gradient Path")
 
-    plt.plot(x_path, y_path, marker='o', color='r', markersize=2, label="Gradient Path")
+    for i in range(len(x_path) - 1):
+        plt.annotate(
+            "",
+            xy=(x_path[i + 1], y_path[i + 1]),
+            xytext=(x_path[i], y_path[i]),
+            arrowprops=dict(arrowstyle="->", color="red", lw=1.5)
+        )
     plt.legend()
 
 
 if __name__ == '__main__':
-    path = gradient()
+    start_points = []
+    for i in range(5):
+        start_points.append((np.random.uniform(-5, 5), np.random.uniform(-5)))
     plot_isohypse()
-    plot_gradient_path(path)
+    for x_0, y_0 in start_points:
+        path = gradient(x_0, y_0)
+        plot_gradient_path(path)
     plt.savefig("isohypse_plot.png")
